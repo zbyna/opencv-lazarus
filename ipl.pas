@@ -14,7 +14,9 @@ unit IPL;
 {$A+,Z+}
 
 interface
-{$ifdef FPC}{$mode delphi}{$endif}
+{$ifdef FPC}
+  {$mode delphi}
+{$endif}
 
 
 uses
