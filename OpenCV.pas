@@ -304,7 +304,7 @@ type
             type_       : Integer;
             step        : Integer;
             refcount    : PInteger;
-            hdr_refcount: Integer;
+            hdr_refcount: {$ifdef CPU64}int64{$else}integer{$endif};
             data        : TMatData;
             rows        : Integer;
             cols        : Integer;

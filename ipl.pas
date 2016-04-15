@@ -185,7 +185,7 @@ type
     MaskROI         : PIplImage;               // poiner to maskROI if any
     ImageId         : Pointer;                 // use of the application
     TileInfo        : PIplTileInfo;            // contains information on tiling
-    ImageSize       : Integer;                 // useful size in bytes
+    ImageSize       : {$ifdef CPU64}int64{$else}integer{$endif};  // useful size in bytes
     ImageData       : PByte;                   // pointer to aligned image
     WidthStep       : Integer;                 // size of aligned line in bytes
     BorderMode      : array [0..3] of Integer;
