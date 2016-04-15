@@ -29,8 +29,14 @@
      *  Lazarus                                                          *
      *  9/2012 - added symbols for use in Linux with FreePascal          *
      *                                                                   *
-     *  3/2016 - J.P "$define V3"  use OpenCV 3.0 Dll          *
-     *  disable MSEGUI to use with Lazarus                               *                                   *
+     *  3/2016 - J.P "$define V3"  use OpenCV 3.0 Dll                    *
+     *  disable MSEGUI to use with Lazarus                               *
+     *  4/2016 - zbyna several fixes for fpc 64 bit. compiler            *
+     *         - added remainig utilities from HighGUI_DLL               *
+     *         - fix possibility to use "$define V2" in case of camera   *
+     *           incompatibility ( lifecam 6000HD ...  )                 *
+     *         - fix for 'Not a 24 bit color iplImage!'                  *
+     *           in IplImage2Bitmap                                      *
      *********************************************************************
      *                                                                   *
      *                                                                   *
