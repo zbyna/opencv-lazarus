@@ -51,7 +51,7 @@
 unit OpenCV;
 
 {set here the OpenCV version}
-{$define V3}
+{$define V2}
 
 
 {If you use Freepascal with MSEGUI define the same symbol,
@@ -97,11 +97,11 @@ cvDLL       = 'opencv_world300.dll';
 
 {$else}
 {$ifdef V2}
- cvDLL       = 'opencv_imgproc231.dll';
- videoDLL    = 'opencv_video231.dll';
- calibDLL    = 'opencv_calib3d231.dll';
- HighGUI_DLL = 'opencv_highgui231.dll';
- cxCore      = 'opencv_core231.dll';
+ cvDLL       = 'opencv_imgproc2412.dll';
+ videoDLL    = 'opencv_video2412.dll';
+ calibDLL    = 'opencv_calib3d2412.dll';
+ HighGUI_DLL = 'opencv_highgui2412.dll';
+ cxCore      = 'opencv_core2412.dll';
 {$else}
  cvDLL       = 'CV100.DLL';
  videoDLL    = 'CV100.DLL';
@@ -1632,7 +1632,8 @@ function cvSetCaptureProperty( capture: PCvCapture; property_id: longint; value:
 
 {----------------------------------------------------}
 { CVCam auxiliary library, only in OpenCV V1 }
-{$ifndef V3 AND $ifndef V2}
+{$ifndef V3}
+{$ifndef V2}
 const
  CVCAM_PROP_ENABLE: string = 'enable';
  CVCAM_PROP_RENDER: string = 'render';
@@ -1689,6 +1690,7 @@ type
  { get/set the property of the camera. returns 0 if the property is not supported }
  function cvcamGetProperty(camera: longint;  prop: string; value: pointer): longint; cdecl;
  function cvcamSetProperty(camera: longint; prop: string; value: pointer): longint; cdecl;
+{$endif}
 {$endif}
 
   {***************************************************************************************\
@@ -1967,7 +1969,8 @@ uses
 
 {----------------------------------------------------}
 { CVCam auxiliary library, only in OpenCV V1 }
-{$ifndef V3 AND $ifndef V2}
+{$ifndef V3}
+   {$ifndef V2}
  function cvcamGetCamerasCount;           external CvCam       name 'cvcamGetCamerasCount';
  function cvcamSelectCamera;              external CvCam       name 'cvcamSelectCamera';
  function cvcamGetProperty;               external CvCam       name 'cvcamGetProperty';
@@ -1978,6 +1981,7 @@ uses
  function cvcamResume;                    external CvCam       name 'cvcamResume';
  function cvcamStop;                      external CvCam       name 'cvcamStop';
  function cvcamExit;                      external CvCam       name 'cvcamExit';
+{$endif}
 {$endif}
  {----------------------------------------------------}
  Procedure cvMatMul( A,B,D : PCvArr );
