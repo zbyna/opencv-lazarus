@@ -2643,8 +2643,9 @@ end;
 -----------------------------------------------------------------------------}
 procedure IplImage2Bitmap(iplImg: PIplImage; var bitmap: TBitmap);
   VAR
-    j        :  longint;
-    offset   :  longint;
+    i : PtrUint; // by Zbyna
+    j        :  PtrUint;
+    offset   :  PtrUint;
     dataByte :  PByteArray;
     RowIn    :  pByteArray;
 {$ifdef MSEGUI}
@@ -2658,8 +2659,8 @@ procedure IplImage2Bitmap(iplImg: PIplImage; var bitmap: TBitmap);
 {$endif}
 BEGIN
   TRY
-    assert((iplImg.Depth = 8) and (iplImg.NChannels = 3),
-                'Not a 24 bit color iplImage!');
+   //assert((iplImg.Depth = 8) and (iplImg.NChannels = 3),   // by zbyna
+   //             'Not a 24 bit color iplImage!');
 
 {$ifdef MSEGUI}
     size.cy := iplImg.Height;
@@ -2678,15 +2679,15 @@ BEGIN
     // origin BL = Bottom-Left
     if (iplImg.ChannelSeq = 'BGR')
         and (iplimg.Origin = IPL_ORIGIN_BL) then
-    begin
+    begin                                           // iplImg.ChannelSeq = 'BGR'
 {$ifdef MSEGUI} 
         po2:= bitmap.scanline[0];
-        offset := longint(iplimg.ImageData);
+        offset := PtrUint(iplimg.ImageData);
 		// scan every line from IPL image because could have filler
 		// bytes in the end
 		FOR j := 0  TO bitmap.size.cy - 1 DO
 		BEGIN
-          offset := longint(iplimg.ImageData) + iplImg.WidthStep * j;
+          offset := PtrUint(iplimg.ImageData) + iplImg.WidthStep * j;
           FOR k := 0 TO bitmap.size.cx - 1 DO
           BEGIN
               dataByte := pbytearray( offset);
@@ -2700,7 +2701,7 @@ BEGIN
         END;
 {$else}
   {$ifdef LAZARUS}
-        offset := longint(iplimg.ImageData) - iplImg.WidthStep;
+        offset := PtrUint(iplimg.ImageData) - iplImg.WidthStep;
         FOR j := 0 TO Bitmap.Height-1 DO
         BEGIN
           RowIn  := lazImg.GetDataLineStart(bitmap.Height -1 - j);
@@ -2715,15 +2716,15 @@ BEGIN
         CopyMemory(rowin, dataByte, iplImg.ImageSize);
    {$endif}
 {$endif}
-    end else
+    end  {iplImg.ChannelSeq = 'BGR'}    else    // iplImg.ChannelSeq = 'GRAY'
 {$ifdef MSEGUI}
         po2:= bitmap.scanline[0];
-        offset := longint(iplimg.ImageData);
+        offset := PtrUint(iplimg.ImageData);
 		// scan every line from IPL image because could have filler
 		// bytes in the end
 		FOR j := 0 TO bitmap.size.cy - 1 DO
 		BEGIN
-          offset := longint(iplimg.ImageData) + iplImg.WidthStep * j;
+          offset := PtrUint(iplimg.ImageData) + iplImg.WidthStep * j;
           FOR k := 0 TO bitmap.size.cx - 1 DO
           BEGIN
               dataByte := pbytearray( offset);
@@ -2736,19 +2737,40 @@ BEGIN
            END;
         END;
 {$else}
-  {$ifdef LAZARUS}
+  {$ifdef LAZARUS}  //iplImg.ChannelSeq = 'GRAY'    // by zbyna
+    if (iplImg.ChannelSeq = 'GRAY') then
+      begin
+        //offset := PtrUint(iplimg.ImageData) - iplImg.WidthStep;
+        FOR j := 0 TO bitmap.Height - 1 DO
+        begin
+          //RowIn  := lazImg.GetDataLineStart(bitmap.Height -1 - j);
+          //offset := PtrUint(iplimg.ImageData) + iplImg.WidthStep * j;
+          RowIn  := lazImg.GetDataLineStart(j);
+          offset := PtrUint(iplimg.ImageData) + iplImg.WidthStep * j;
+          dataByte := pbytearray( offset);
+          for i:=0 to bitmap.Width -1 do
+            begin
+              RowIn[3*i  ] := dataByte[i];
+              RowIn[3*i+1] := dataByte[i];
+              RowIn[3*i+2] := dataByte[i];
+            end;
+        End
+
+      end   else
+       begin
         FOR j := 0 TO Bitmap.Height-1 DO
         BEGIN
           RowIn  := lazImg.GetDataLineStart(j );
-          offset := longint(iplimg.ImageData) + iplImg.WidthStep * j;
+          offset := PtrUint(iplimg.ImageData) + iplImg.WidthStep * j;
           dataByte := pbytearray( offset);
           CopyMemory(rowin, dataByte, iplImg.WidthStep);
         END;
+       end;
   {$else}
  	FOR j := 0 TO Bitmap.Height-1   DO
         BEGIN
           RowIn  := Bitmap.Scanline[j ];
-          offset := longint(iplimg.ImageData) + iplImg.WidthStep * j;
+          offset := PtrUint(iplimg.ImageData) + iplImg.WidthStep * j;
           dataByte := pbytearray( offset);
           CopyMemory(rowin, dataByte, iplImg.WidthStep);
         END;
