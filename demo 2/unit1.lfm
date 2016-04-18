@@ -1,0 +1,23 @@
+object Form1: TForm1
+  Left = 348
+  Height = 542
+  Top = 184
+  Width = 1089
+  Caption = 'Form1'
+  ClientHeight = 542
+  ClientWidth = 1089
+  OnCreate = FormCreate
+  LCLVersion = '1.5'
+  object imgColorObr: TImage
+    Left = 24
+    Height = 440
+    Top = 24
+    Width = 464
+  end
+  object imgGreyObr: TImage
+    Left = 568
+    Height = 438
+    Top = 24
+    Width = 466
+  end
+end
