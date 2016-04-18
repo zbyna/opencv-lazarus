@@ -1,0 +1,92 @@
+object Form1: TForm1
+  Left = 0
+  Height = 558
+  Top = 0
+  Width = 743
+  AutoSize = True
+  Caption = 'Lkdemo'
+  ClientHeight = 558
+  ClientWidth = 743
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
+  LCLVersion = '1.5'
+  object VideoSettings: TButton
+    Left = 32
+    Height = 26
+    Top = 15
+    Width = 107
+    Caption = 'Video Settings'
+    Enabled = False
+    TabOrder = 0
+  end
+  object Label1: TLabel
+    Left = 168
+    Height = 21
+    Top = 16
+    Width = 79
+    Caption = 'Frame Rate'
+    ParentColor = False
+  end
+  object FrameRate: TFloatSpinEdit
+    Left = 256
+    Height = 29
+    Top = 16
+    Width = 109
+    Increment = 1
+    MaxValue = 25
+    MinValue = 0
+    OnChange = FrameRateChange
+    TabOrder = 1
+    Value = 10
+  end
+  object Image1: TImage
+    Left = 26
+    Height = 413
+    Top = 88
+    Width = 630
+    AutoSize = True
+  end
+  object AutoInit: TButton
+    Left = 400
+    Height = 24
+    Top = 15
+    Width = 92
+    Caption = 'Auto Initialize'
+    OnClick = AutoInitClick
+    TabOrder = 2
+  end
+  object DeletePoints: TButton
+    Left = 506
+    Height = 24
+    Top = 15
+    Width = 104
+    Caption = 'Delete all Points'
+    OnClick = DeletePointsClick
+    TabOrder = 3
+  end
+  object Night: TButton
+    Left = 440
+    Height = 24
+    Top = 56
+    Width = 50
+    Caption = 'Night'
+    OnClick = NightClick
+    TabOrder = 4
+  end
+  object Abort: TButton
+    Left = 560
+    Height = 24
+    Top = 56
+    Width = 50
+    Caption = 'Abort'
+    OnClick = AbortClick
+    TabOrder = 5
+  end
+  object Timer1: TTimer
+    Enabled = False
+    Interval = 100
+    OnTimer = Timer1Timer
+    left = 384
+    top = 32
+  end
+end
