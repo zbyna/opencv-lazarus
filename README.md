@@ -16,10 +16,14 @@ There is also great opencv port for Delphi:
 https://github.com/Laex/Delphi-OpenCV
 from which I took inspiration and source code too.
 
+According to findings od @blaisexen ipl.pas and opencv.pas, originated from: https://github.com/arturobriones/EmbarcaderoXE3_OpenCV/tree/master/opencvdelphi
+
 So most credit goes to all of them mentioned above.
 
 If you want to try opencv with Lazarus here are bin files needed for opencv 2.4.12:
 - 32bit.: http://uloz.to/xAquti2D/opencv2412-vs-32bit-rar
 - 64bit.: http://uloz.to/xPq6wSNx/opencv-2412-64bit-rar
+
+
 
 
